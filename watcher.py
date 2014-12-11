@@ -161,6 +161,21 @@ class Daemon:
         self.stop()
         self.start()
 
+    def status(self):
+        try:
+            pf = file(self.pidfile, 'r')
+            pid = int(pf.read().strip())
+            pf.close()
+        except IOError:
+            pid = None
+            
+        if pid:
+            print "service running"
+            sys.exit(0)
+        if not pid:
+            print "service not running"
+            sys.exit(3)
+
     def run(self):
         """
         You should override this method when you subclass Daemon. It will be called after the process has been
@@ -347,7 +362,7 @@ if __name__ == "__main__":
                         help='Path to the config file (default: %(default)s)')
     parser.add_argument('command',
                         action='store',
-                        choices=['start','stop','restart','debug'],
+                        choices=['start','stop','restart','status','debug'],
                         help='What to do. Use debug to start in the foreground')
     args = parser.parse_args()
 
@@ -372,6 +387,8 @@ if __name__ == "__main__":
         daemon.stop()
     elif 'restart' == args.command:
         daemon.restart()
+    elif 'status' == args.command:
+        daemon.status()
     elif 'debug' == args.command:
         daemon.run()
     else:
