@@ -6,11 +6,16 @@ fires commands in response to those changes. It is similar to
 to read ini file instead of a plain text file. Unlike incron it can also
 recursively monitor directories.
 
-It's written in Python, making it easier to hack.
+It's written in Python, making it easier to hack. Watcher was migrated 
+to Python. 
+
+## Caveats
+
+The recursive mode allways switches the event create on!
 
 ## Requirements
 
-You need Python 2.7 and the [pyinotify](http://github.com/seb-m/pyinotify)
+You need Python 3.7 and the [pyinotify](http://github.com/seb-m/pyinotify)
 library.
 
 In Ubuntu (and Debian) you can install these with:
